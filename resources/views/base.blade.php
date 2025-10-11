@@ -84,7 +84,7 @@ footer {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="noticias.html">Noticias</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url('/noticias') }}">Noticias</a></li>
           <li class="nav-item"><a class="nav-link" href="quienes-somos.html">Quiénes Somos</a></li>
         </ul>
       </div>

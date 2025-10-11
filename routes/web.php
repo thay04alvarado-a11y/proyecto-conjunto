@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NoticiasController; 
 
-Route::get('/', function () {
-    return view('noticias');
-});
+Route::get('/',[NoticiasController::class, 'index']);
+Route::get('/noticias',[NoticiasController::class, 'lista']);
