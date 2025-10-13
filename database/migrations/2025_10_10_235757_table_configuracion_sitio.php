@@ -15,10 +15,8 @@ return new class extends Migration
         $table->id('idConfiguracion');
         $table->string('nombre_sitio', 150);
         $table->string('logo_sitio', 255)->nullable();
-        $table->text('footer_sitio')->nullable();
-        $table->timestamp('creado_en')->useCurrent();
-        $table->timestamp('actualizado_en')->useCurrent()->useCurrentOnUpdate();
         $table->boolean('activo')->default(1);
+        $table->timestamps();
 });
 
         

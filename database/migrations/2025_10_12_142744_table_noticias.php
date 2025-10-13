@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('noticias', function (Blueprint $table) {
-            $table->id('idNoticias');
+            $table->id('idNoticia');
             $table->string('titulo', 200);
             $table->string('descripcion_corta', 300)->nullable();
             $table->text('descripcion_larga')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
             // 🔹 Relación con la tabla categorias
             $table->foreignId('id_categoria')
                   ->nullable()
-                  ->constrained('categorias', 'idCategorias')
+                  ->constrained('categorias', 'idCategoria')
                   ->nullOnDelete();
 
             $table->timestamps();
