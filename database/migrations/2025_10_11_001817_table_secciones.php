@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('secciones', function (Blueprint $table) {
-            $table->id('idSecciones');
+            $table->id('idSeccion');
             $table->string('identificador', 100); //ej: 'periodo_matricula', 'semana_u'
             $table->string('titulo', 150)->nullable();
             $table->text('parrafo')->nullable();
             $table->string('imagen')->nullable();
-            $table->timestamps();
             $table->boolean('activo')->default(1);
+            $table->timestamps();
             
         });
     }

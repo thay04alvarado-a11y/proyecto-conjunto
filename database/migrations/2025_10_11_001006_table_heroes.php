@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
     Schema::create('heroes', function (Blueprint $table) {
-        $table->id('idHeroes'); // equivale a id INT AUTO_INCREMENT PRIMARY KEY
+        $table->id('idHeroe'); // equivale a id INT AUTO_INCREMENT PRIMARY KEY
         $table->enum('pagina', ['home', 'noticias', 'quienes_somos']);
         $table->string('imagen', 255);
         $table->string('titulo', 150)->nullable();
         $table->string('subtitulo', 255)->nullable();
+        $table->timestamps();
     });
 
     }
