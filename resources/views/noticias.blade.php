@@ -132,7 +132,7 @@ footer {
                             <img src="{{ asset('assets/img/' . $noticia->imagen) }}" class="card-img-top" alt="{{ $noticia->titulo }}" style="height:200px; object-fit:cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $noticia->titulo }}</h5>
-                                <p class="card-text flex-grow-1">{{ $noticia->resumen }}</p>
+                                <p class="card-text flex-grow-1">{{ $noticia->descripcion_corta }}</p>
                                 <!-- Botón que abre el modal -->
                                 <button type="button" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#noticiaModal{{ $noticia->id }}">
                                     Ver más
@@ -143,8 +143,6 @@ footer {
                 @endforeach
             </div>
         </section>
-
-        @foreach($noticias as $noticia)
             <div class="modal fade" id="noticiaModal{{ $noticia->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
@@ -154,7 +152,7 @@ footer {
                         </div>
                         <div class="modal-body">
                             <img src="{{ asset('assets/img/' . $noticia->imagen) }}" class="img-fluid mb-3" alt="{{ $noticia->titulo }}">
-                            <p>{{ $noticia->contenido }}</p>
+                            <p>{{ $noticia->descripcion_larga }}</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -162,8 +160,7 @@ footer {
                     </div>
                 </div>
             </div>
-        @endforeach
-
+       
 
     </section>
 

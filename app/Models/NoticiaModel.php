@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Noticia extends Model
+class NoticiaModel extends Model
 {
     use HasFactory;
 
@@ -13,8 +13,12 @@ class Noticia extends Model
 
     protected $fillable = [
         'titulo',
-        'resumen',
-        'contenido',
+        'descripcion_corta',
+        'descripcion_larga',
         'imagen',
+        'autor',
+        'fecha',
+        'imagen',
+        'id_categoria',
     ];
 }

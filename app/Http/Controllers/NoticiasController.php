@@ -13,7 +13,7 @@ class NoticiasController extends Controller
 
     public function lista()
     {
-        $noticias = NoticiasModel::all(); // Trae todas las noticias
+        $noticias = NoticiaModel::all(); // Trae todas las noticias
         return view('noticias', compact('noticias'));
     }
 }
