@@ -10,5 +10,21 @@ class UsuarioController extends Controller
     {
         return view("base");
     }
+    public function profile()
+    {
+        return "profile";
+    }
+    public function logout()
+    {
+        return "logout";
+    }
+    public function usuarios()
+    {
+        return view('admin.usuarios.usuarios');
+    }
+    public function usuariosForm()
+    {
+        return view('admin.usuarios.usuarios-form');
+    }
     
 }
