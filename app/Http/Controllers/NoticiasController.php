@@ -16,4 +16,10 @@ class NoticiasController extends Controller
         $noticias = NoticiaModel::all(); // Trae todas las noticias
         return view('noticias', compact('noticias'));
     }
+
+     public function ver($id)
+    {
+        $noticia = NoticiaModel::find($id);
+        return view('detalle_noticia', compact('noticia'));
+    }
 }

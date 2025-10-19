@@ -6,6 +6,7 @@ use App\Http\Controllers\NoticiasController;
 
 Route::get('/',[NoticiasController::class, 'index']);
 Route::get('/noticias',[NoticiasController::class, 'lista']);
+Route::get('/noticiasDetalle/{id}', [NoticiasController::class, 'ver'])->name('noticias.ver');
 
 
 

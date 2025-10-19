@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class NoticiaModel extends Model
 {
     use HasFactory;
+    
 
     protected $table = 'noticias'; // solo si quieres especificarlo explícitamente
+    protected $primaryKey = 'idNoticia';
 
     protected $fillable = [
         'titulo',
