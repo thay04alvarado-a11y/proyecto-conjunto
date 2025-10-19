@@ -3,16 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\NoticiaModel;
 
 class NoticiasController extends Controller
 {
-    //
-    function noticias()
+
+    public function index()
     {
-        return view('admin.noticas.noticias');
+        return view('base');
     }
-    function noticiasForm()
+
+    public function lista()
     {
-        return view('admin.noticas.noticias-form');
+        $noticias = NoticiaModel::all(); // Trae todas las noticias
+        return view('noticias', compact('noticias'));
+    }
+
+     public function ver($id)
+    {
+        $noticia = NoticiaModel::find($id);
+        return view('detalle_noticia', compact('noticia'));
     }
 }
