@@ -8,7 +8,7 @@ class UsuarioController extends Controller
 {
       public function base()
     {
-        return view("base");
+        return view("home");
     }
     public function profile()
     {
