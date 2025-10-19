@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\NoticiasController;
-
+use App\Http\Controllers\HomeSomosController;
 
 /* Rutas para la pagina principal */
 Route::get('/',[NoticiasController::class, 'index']);
@@ -24,3 +25,8 @@ Route::get('/usuarios-form', [UsuarioController::class, 'usuariosForm'])->name('
 /* Rutas para las noticias */
 Route::get('/noticias',[NoticiasController::class, 'lista']);
 Route::get('/noticiasDetalle/{id}', [NoticiasController::class, 'ver'])->name('noticias.ver');
+
+/* Rutas para el home y somos */
+Route::get('/home', [HomeSomosController::class, 'home']);
+Route::get('/somos', [HomeSomosController::class, 'somos']);
+
