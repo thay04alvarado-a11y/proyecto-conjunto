@@ -56,3 +56,20 @@ footer {
   padding: 15px 0;
   margin-top: 40px;
 }
+
+.homeHero{
+  background-image: url('../img/homeHero.jpeg');
+  background-size: cover; /* Cubre todo el elemento */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 500px;
+
+}
+
+.somosHero{
+  background-image: url('../img/somosHero.webp');
+  background-size: cover; /* Cubre todo el elemento */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 500px;
+}
