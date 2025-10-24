@@ -1,4 +1,4 @@
-<footer class="app-footer">
+<footer class="app-footer" style="text-align: center;">
     <!--begin::To the end-->
     <div class="float-end d-none d-sm-inline">Digales</div>
     <!--end::To the end-->

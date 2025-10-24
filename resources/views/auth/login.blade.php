@@ -1,5 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<style>
+  * {
+        font-family: "Poppins", sans-serif;
+      }
+
+     
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .login-box {
+        background: #ffffff;
+        padding: 40px 35px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        width: 380px;
+        animation: fadeIn 1s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .login-logo a {
+        font-size: 32px;
+        font-weight: 600;
+        color: #2ecc71;
+        text-decoration: none;
+      }
+
+      .form-control {
+        border-radius: 10px;
+        padding: 12px;
+      }
+
+      .btn-primary {
+        background-color: #2ecc71;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #27ae60;
+        transform: scale(1.05);
+      }
+
+      .btn-facebook {
+        background-color: #3b5998;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-facebook:hover {
+        background-color: #324b81;
+        transform: scale(1.05);
+      }
+
+      .btn-google {
+        background-color: #db4437;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-google:hover {
+        background-color: #c1351d;
+        transform: scale(1.05);
+      }
+
+      a {
+        color: #2ecc71;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .login-box-msg {
+        color: #555;
+        font-size: 15px;
+        margin-bottom: 25px;
+      }
+
+      .input-group-text {
+        background-color: #f1f1f1;
+        border: none;
+      }
+
+      .card {
+        border: none;
+        background: transparent;
+      }
+
+</style>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
