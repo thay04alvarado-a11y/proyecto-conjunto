@@ -11,7 +11,7 @@ class UsuarioController extends Controller
     // 📄 Vista base
     public function base()
     {
-        return view("base");
+        return view("home");
     }
 
     // 🔐 Vista login

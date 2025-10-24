@@ -7,15 +7,19 @@ use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\NoticiasController;
 
 
-Route::get('/', [UsuarioController::class, 'base']);
+/* Rutas para la pagina principal */
+Route::get('/',[NoticiasController::class, 'index']);
+Route::match(['get', 'post'], '/dashboard/{seccion?}/{opcion?}/{id?}', [DashboardController::class, 'index'])->name('dashboard');
 
-
-//Rutas keylor
+/* Rutas para el usuario */
+Route::get('/profile', [UsuarioController::class, 'profile'])->name('profile');
 Route::get('/login', [UsuarioController::class, 'Login']);
 Route::post('/loginConfirmacion', [UsuarioController::class, 'loginConfi']);
-
+Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 Route::get('/usuarios', [UsuarioController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios-form', [UsuarioController::class, 'usuariosForm'])->name('usuarios-form');
+
+
 
 Route::post('/insertarUsuario', [UsuarioController::class, 'insertarUsuario']);
 
@@ -27,22 +31,6 @@ Route::patch('/actualizar-usuario/{idUsuario}', [UsuarioController::class, 'upda
     ->name('actualizar-usuario');
 
 
-
-
-/* Rutas para el login */
-
-/*  si ya esta logueado usamos un */
-/* Route::middleware('auth')->group(function () { */
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [UsuarioController::class, 'profile'])->name('profile');
-    Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
-    Route::get('/website', [WebsiteController::class, 'website'])->name('website');
-    Route::get('/website-form', [WebsiteController::class, 'websiteForm'])->name('website-form');
-    Route::get('/noticias', [NoticiasController::class, 'noticias'])->name('noticias');
-    Route::get('/noticias-form', [NoticiasController::class, 'noticiasForm'])->name('noticias-form');
-/* }); */
-
-/*  si no esta logueado usamos el middleware guest */
-/* Route::middleware('guest')->group(function () {
-    Route::get('/login', [UsuarioController::class, 'login']);
-}); */
+/* Rutas para las noticias */
+Route::get('/noticias',[NoticiasController::class, 'lista']);
+Route::get('/noticiasDetalle/{id}', [NoticiasController::class, 'ver'])->name('noticias.ver');
