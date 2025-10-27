@@ -89,75 +89,28 @@
                 <li class="nav-header">SITIO WEB</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-image"></i>
-                        <p>Heroes</p>
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </a>
-                    
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'heroes']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-list"></i>
-                                <p>Lista Heroes</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'heroes', 'opcion' => 'form']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-plus-circle"></i>
-                                <p>Crear Hero</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-columns"></i>
-                        <p>Secciones</p>
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                    </a>
-                    
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'secciones']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-list"></i>
-                                <p>Lista Secciones</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'secciones', 'opcion' => 'form']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-plus-circle"></i>
-                                <p>Crear Sección</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li class="nav-header">SITIO WEB (Configuración antigua)</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-palette"></i>
-                        <p>Sitio Web</p>
+                        <p>Configuración</p>
                         <i class="nav-arrow bi bi-chevron-right"></i>
                     </a>
                     
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'website', 'opcion' => 'form']) }}" class="nav-link">
+                            <a href="{{ route('dashboard', ['seccion' => 'pagina', 'opcion' => 'home']) }}" class="nav-link">
                                 <i class="nav-icon bi bi-house"></i>
                                 <p>Inicio</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'website', 'opcion' => 'form']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-newspaper"></i>
-                                <p>Noticias</p>
+                            <a href="{{ route('dashboard', ['seccion' => 'pagina', 'opcion' => 'somos']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-person"></i>
+                                <p>Quienes Somos</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('dashboard', ['seccion' => 'website', 'opcion' => 'form']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-person"></i>
-                                <p>Quienes Somos</p>
+                            <a href="{{ route('dashboard', ['seccion' => 'pagina', 'opcion' => 'noticias']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-newspaper"></i>
+                                <p>Noticias</p>
                             </a>
                         </li>
                     </ul>
