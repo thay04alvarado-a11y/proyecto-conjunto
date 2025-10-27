@@ -25,8 +25,11 @@
           @else
             {{ date('d/m/Y', strtotime($noticia->created_at)) }}
           @endif
-          @if($noticia->categoria)
-            | <span class="badge bg-info">{{ $noticia->categoria->nombre }}</span>
+          @if($noticia->categorias && $noticia->categorias->count() > 0)
+            |
+            @foreach($noticia->categorias as $cat)
+              <span class="badge bg-info me-1">{{ $cat->nombre }}</span>
+            @endforeach
           @endif
         </div>
 

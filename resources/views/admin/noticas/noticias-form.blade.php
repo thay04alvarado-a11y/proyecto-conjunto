@@ -131,17 +131,23 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="id_categoria" class="form-label">Categoría</label>
+                  <label for="categorias" class="form-label">Categorías</label>
                   @if(isset($categorias) && $categorias->count() > 0)
-                    <select class="form-select" id="id_categoria" name="id_categoria">
-                      <option value="">Selecciona una categoría</option>
+                    <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
                       @foreach($categorias as $cat)
-                        <option value="{{ $cat->idCategoria }}" 
-                                {{ old('id_categoria', isset($noticia) ? $noticia->id_categoria : '') == $cat->idCategoria ? 'selected' : '' }}>
-                          {{ $cat->nombre }}
-                        </option>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" 
+                                 name="categorias[]" 
+                                 id="categoria_{{ $cat->idCategoria }}"
+                                 value="{{ $cat->idCategoria }}"
+                                 {{ (collect(old('categorias', isset($noticia) && $noticia->categorias ? $noticia->categorias->pluck('idCategoria')->toArray() : []))->contains($cat->idCategoria)) ? 'checked' : '' }}>
+                          <label class="form-check-label" for="categoria_{{ $cat->idCategoria }}">
+                            {{ $cat->nombre }}
+                          </label>
+                        </div>
                       @endforeach
-                    </select>
+                    </div>
+                    <small class="form-text text-muted">Puedes seleccionar múltiples categorías</small>
                   @else
                     <div class="alert alert-warning">
                       No hay categorías disponibles. 
@@ -150,7 +156,10 @@
                       </a>
                     </div>
                   @endif
-                  @error('id_categoria')
+                  @error('categorias')
+                    <div class="text-danger">{{ $message }}</div>
+                  @enderror
+                  @error('categorias.*')
                     <div class="text-danger">{{ $message }}</div>
                   @enderror
                 </div>

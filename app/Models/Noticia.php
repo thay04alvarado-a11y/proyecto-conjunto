@@ -19,12 +19,12 @@ class Noticia extends Model
         'imagen',
         'autor',
         'fecha',
-        'id_categoria',
     ];
 
-    // Relación con Categoría
-    public function categoria()
+    // Relación Many-to-Many con Categorías
+    public function categorias()
     {
-        return $this->belongsTo(Categoria::class, 'id_categoria', 'idCategoria');
+        return $this->belongsToMany(Categoria::class, 'categorias_noticias', 'idNoticia', 'idCategoria')
+                    ->withTimestamps();
     }
 }

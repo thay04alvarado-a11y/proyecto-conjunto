@@ -64,7 +64,7 @@ class DashboardController extends Controller
     public function noticias()
     {
         try {
-            $noticias = Noticia::with('categoria')->orderBy('created_at', 'desc')->get();
+            $noticias = Noticia::with('categorias')->orderBy('created_at', 'desc')->get();
             $categorias = \App\Models\Categoria::where('activo', 1)->get();
             return view('admin.noticas.noticias', compact('noticias', 'categorias'));
         } catch (\Throwable $th) {
@@ -87,7 +87,8 @@ class DashboardController extends Controller
                     'autor' => 'required|string|max:100',
                     'fecha' => 'required|date',
                     'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-                    'id_categoria' => 'nullable|integer'
+                    'categorias' => 'nullable|array',
+                    'categorias.*' => 'integer|exists:categorias,idCategoria'
                 ]);
 
                 // Manejar la imagen
@@ -112,9 +113,23 @@ class DashboardController extends Controller
                     $idnew = Crypt::decryptString($id);
                     $noticia = Noticia::findOrFail($idnew);
                     $noticia->update($validated);
+                    
+                    // Sincronizar categorías
+                    if ($request->has('categorias')) {
+                        $noticia->categorias()->sync($request->categorias);
+                    } else {
+                        $noticia->categorias()->detach();
+                    }
+                    
                     $mensaje = 'Noticia actualizada correctamente';
                 } else {
-                    Noticia::create($validated);
+                    $noticia = Noticia::create($validated);
+                    
+                    // Asociar categorías
+                    if ($request->has('categorias')) {
+                        $noticia->categorias()->attach($request->categorias);
+                    }
+                    
                     $mensaje = 'Noticia creada correctamente';
                 }
                 

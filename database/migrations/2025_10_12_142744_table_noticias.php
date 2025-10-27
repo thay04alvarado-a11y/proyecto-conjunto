@@ -19,13 +19,6 @@ return new class extends Migration
             $table->string('autor', 100)->nullable();
             $table->date('fecha')->nullable();
             $table->string('imagen')->nullable();
-
-            // 🔹 Relación con la tabla categorias
-            $table->foreignId('id_categoria')
-                  ->nullable()
-                  ->constrained('categorias', 'idCategoria')
-                  ->nullOnDelete();
-
             $table->timestamps();
         });
     }

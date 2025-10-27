@@ -145,10 +145,12 @@
                     <td>{{ $n->autor ?? 'N/A' }}</td>
                     <td>{{ $n->fecha ? date('d/m/Y', strtotime($n->fecha)) : 'N/A' }}</td>
                     <td>
-                      @if($n->categoria)
-                        <span class="badge bg-info">{{ $n->categoria->nombre }}</span>
+                      @if($n->categorias && $n->categorias->count() > 0)
+                        @foreach($n->categorias as $cat)
+                          <span class="badge bg-info">{{ $cat->nombre }}</span>
+                        @endforeach
                       @else
-                        <span class="text-muted">Sin categoría</span>
+                        <span class="text-muted">Sin categorías</span>
                       @endif
                     </td>
                     <td class="text-nowrap">

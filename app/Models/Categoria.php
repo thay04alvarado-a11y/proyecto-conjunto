@@ -17,5 +17,12 @@ class Categoria extends Model
         'descripcion',
         'activo',
     ];
+
+    // Relación Many-to-Many con Noticias
+    public function noticias()
+    {
+        return $this->belongsToMany(Noticia::class, 'categorias_noticias', 'idCategoria', 'idNoticia')
+                    ->withTimestamps();
+    }
 }
 

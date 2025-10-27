@@ -15,13 +15,13 @@ class NoticiasController extends Controller
 
     public function lista()
     {
-        $noticias = Noticia::with('categoria')->whereNotNull('imagen')->orderBy('created_at', 'desc')->get();
+        $noticias = Noticia::with('categorias')->whereNotNull('imagen')->orderBy('created_at', 'desc')->get();
         return view('noticias', compact('noticias'));
     }
 
      public function ver($id)
     {
-        $noticia = Noticia::with('categoria')->findOrFail($id);
+        $noticia = Noticia::with('categorias')->findOrFail($id);
         return view('detalle_noticia', compact('noticia'));
     }
 }
