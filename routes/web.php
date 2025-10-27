@@ -22,6 +22,18 @@ Route::get('/logout', [UsuarioController::class, 'logout'])->name('logout');
 Route::get('/usuarios', [UsuarioController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios-form', [UsuarioController::class, 'usuariosForm'])->name('usuarios-form');
 
+
+
+Route::post('/insertarUsuario', [UsuarioController::class, 'insertarUsuario']);
+
+Route::delete('/eliminar-usuario/{idUsuario}', [UsuarioController::class, 'destroy'])->name('eliminarUsuario');
+
+Route::get('/editarUsuario/{idUsuario}', [UsuarioController::class, 'editUsuario'])->name('editarUsuario');
+
+Route::patch('/actualizar-usuario/{idUsuario}', [UsuarioController::class, 'updateUsuario'])
+    ->name('actualizar-usuario');
+
+
 /* Rutas para las noticias */
 Route::get('/noticias',[NoticiasController::class, 'lista']);
 Route::get('/noticiasDetalle/{id}', [NoticiasController::class, 'ver'])->name('noticias.ver');
