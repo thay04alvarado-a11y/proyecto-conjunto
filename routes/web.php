@@ -9,7 +9,7 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\HomeSomosController;
 
 /* Rutas para la pagina principal */
-Route::get('/',[NoticiasController::class, 'index']);
+Route::get('/',[HomeSomosController::class, 'home']);
 
 /* Rutas para el dashboard */
 Route::match(['get', 'post'], '/dashboard/{seccion?}/{opcion?}/{id?}', [DashboardController::class, 'index'])->name('dashboard');

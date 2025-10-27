@@ -36,10 +36,10 @@
   <body>
     <div class="login-box text-center">
       <div class="login-logo mb-3">
-        <a href="#"><b>Login</b></a>
+        <a href="#"><b>Iniciar sesión</b></a>
       </div>
 
-      <p class="login-box-msg">Sign in to start your session</p>
+      <p class="login-box-msg">Inicia sesión para continuar</p>
 
      <form id="form-login">
       <!-- Campo de correo -->
@@ -50,7 +50,7 @@
           name="correo"
           class="form-control"
           placeholder="Correo electrónico"
-          value="keylorfrancisco123@gmail.com"
+          value="admin@gmail.com"
           required
           autocomplete="email"
         />
@@ -65,7 +65,7 @@
           name="contra"
           class="form-control"
           placeholder="Contraseña"
-          value="Knlm1234567."
+          value="Diosteama.1"
           required
           autocomplete="current-password"
         />
@@ -89,18 +89,8 @@
 
 
       <div class="d-grid gap-2 mb-3">
-        <a href="#" class="btn btn-facebook">
-          <i class="bi bi-facebook me-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-google">
-          <i class="bi bi-google me-2"></i> Sign in using Google
-        </a>
       </div>
 
-      <p><a href="#">I forgot my password</a></p>
-      <p class="mb-0">
-        <a href="#" class="text-center">Register a new membership</a>
-      </p>
     </div>
 
     <!-- Scripts -->
