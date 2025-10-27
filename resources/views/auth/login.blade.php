@@ -144,7 +144,7 @@
   
   </head>
 
-  <body>
+  <body class="d-flex align-items-center justify-content-center min-vh-100">
     <div class="login-box text-center">
       <div class="login-logo mb-3">
         <a href="#"><b>Iniciar sesión</b></a>
@@ -277,7 +277,7 @@
               timer: 2000,
             }).then(() => {
               // ✅ Redirigir a dashboard en lugar de recargar
-              window.location.href = "/";
+              window.location.href = "{{ route('dashboard') }}";
             });
           } else {
             Swal.fire({

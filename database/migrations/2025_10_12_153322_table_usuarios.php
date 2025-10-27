@@ -1,9 +1,12 @@
 <?php
 
+use App\Models\Usuario;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -19,6 +22,18 @@ return new class extends Migration
             $table->boolean('activo')->default(1);
             $table->timestamps();
         });
+        
+        try {
+            DB::beginTransaction();
+            $usuario = new Usuario();
+            $usuario->nombre = 'Administrador';
+            $usuario->correo = 'admin@gmail.com';
+            $usuario->contra = Crypt::encryptString('Diosteama.1');
+            $usuario->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            log::error('Error al crear el usuario: ' . $th->getMessage());
+        }
     }
 
     /**

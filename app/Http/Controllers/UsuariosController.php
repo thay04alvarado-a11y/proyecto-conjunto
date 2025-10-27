@@ -3,17 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\modelUsuarios;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Crypt;
 
-class UsuarioController extends Controller
+class UsuariosController extends Controller
 {
-    // 📄 Vista base
-    public function base()
-    {
-        return view("home");
-    }
-
     // 🔐 Vista login
     public function Login()
     {
@@ -28,7 +24,7 @@ class UsuarioController extends Controller
             $contra = $request->input('contra');
 
             // 🔎 Buscar usuario por correo
-            $usuario = modelUsuarios::where('correo', $correo)->first();
+            $usuario = Usuario::where('correo', $correo)->first();
 
             if (!$usuario) {
                 return response()->json([
@@ -38,7 +34,7 @@ class UsuarioController extends Controller
             }
 
             // 🔐 Verificar contraseña encriptada
-            if (!Hash::check($contra, $usuario->contra)) {
+            if ($contra != Crypt::decryptString($usuario->contra)) {
                 return response()->json([
                     'ok' => false,
                     'mensaje' => 'Contraseña incorrecta.',
@@ -56,10 +52,7 @@ class UsuarioController extends Controller
             // ✅ Login exitoso
             return response()->json([
                 'ok' => true,
-                'mensaje' => '✅ Inicio de sesión exitoso. Bienvenido ' . $usuario->nombre,
-                'redirect' => url('/login')
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'ok' => false,
@@ -78,13 +71,20 @@ class UsuarioController extends Controller
     // 🚪 Cerrar sesión
     public function logout()
     {
+        try {
+            Auth::logout();
+            return redirect()->route('login');
+        } catch (\Throwable $th) {
+            log::error('Error al cerrar sesión: ' . $th->getMessage());
+            return redirect()->route('login')->with('error', 'Error al cerrar sesión');
+        }
         return "logout";
     }
 
     // 📋 Listado de usuarios
     public function usuarios()
     {
-        $modelUsuarios = modelUsuarios::all();
+        $usuarios = Usuario::all();
         return view('admin.usuarios.usuarios', compact('modelUsuarios'));
     }
 
@@ -105,7 +105,7 @@ class UsuarioController extends Controller
                 'activo' => 'required|boolean',
             ]);
 
-            $usuario = modelUsuarios::create([
+            $usuario = Usuario::create([
                 'nombre' => $validated['nombre'],
                 'correo' => $validated['correo'],
                 'contra' => bcrypt($validated['contra']),
@@ -117,7 +117,6 @@ class UsuarioController extends Controller
                 'mensaje' => '✅ Usuario insertado correctamente.',
                 'usuario' => $usuario
             ], 200);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'ok' => false,
@@ -136,8 +135,9 @@ class UsuarioController extends Controller
     // 🗑️ Eliminar usuario
     public function destroy($idUsuario)
     {
-        $usuario = modelUsuarios::findOrFail($idUsuario);
-        $usuario->delete();
+        $usuario = Usuario::findOrFail($idUsuario);
+        $usuario->activo = 0;
+        $usuario->save();
 
         return redirect()->back()->with('success', '✅ Usuario eliminado correctamente.');
     }
@@ -145,28 +145,27 @@ class UsuarioController extends Controller
     // ✏️ Editar usuario
     public function editUsuario($idUsuario)
     {
-        $usuario = modelUsuarios::findOrFail($idUsuario);
+        $usuario = Usuario::findOrFail($idUsuario);
         return view('admin.usuarios.usuarios-editar', compact('usuario'));
     }
 
-    
+
     public function updateUsuario(Request $request)
-{
-    $usuario = modelUsuarios::findOrFail($request->input('idUsuario'));
+    {
+        $usuario = Usuario::findOrFail($request->input('idUsuario'));
 
-    $datos = $request->only(['nombre', 'correo', 'activo']);
+        $datos = $request->only(['nombre', 'correo', 'activo']);
 
-    // Solo agrega la contraseña si llega
-    if (!empty($request->input('contra'))) {
-        $datos['contra'] = bcrypt($request->input('contra'));
+        // Solo agrega la contraseña si llega
+        if (!empty($request->input('contra'))) {
+            $datos['contra'] = bcrypt($request->input('contra'));
+        }
+
+        $usuario->update($datos);
+
+        return response()->json([
+            'mensaje' => 'Usuario modificado exitosamente',
+            'ok' => true
+        ]);
     }
-
-    $usuario->update($datos);
-
-    return response()->json([
-        'mensaje' => 'Usuario modificado exitosamente',
-        'ok' => true
-    ]);
-}
-
 }
