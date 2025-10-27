@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -38,16 +39,31 @@ class DashboardController extends Controller
     //como ejemplo:
     public function dashboard()
     {
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            log::error('Error al cargar el dashboard: ' . $th->getMessage());
+        }
         return view('admin.dashboard');
     }
     
     //noticias
     public function noticias()
     {
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            log::error('Error al cargar el noticias: ' . $th->getMessage());
+        }
         return view('admin.noticas.noticias');
     }
     public function noticiasForm()
     {
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            log::error('Error al cargar el noticias form: ' . $th->getMessage());
+        }
         return view('admin.noticas.noticias-form');
     }
 
@@ -55,10 +71,20 @@ class DashboardController extends Controller
     
     function website()
     {
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            log::error('Error al cargar el website: ' . $th->getMessage());
+        }
         return view('admin.website.website');
     }
     function websiteForm()
     {
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            log::error('Error al cargar el website: ' . $th->getMessage());
+        }
         return view('admin.website.website-form');
     }
 
