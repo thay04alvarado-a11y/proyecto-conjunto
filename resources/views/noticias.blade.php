@@ -4,53 +4,89 @@
 
 @section('hero')
     @if(isset($heroe))
-        <div class="hero" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{ $heroe->imagen ? asset($heroe->imagen) : '' }}'); background-size: cover; background-position: center; min-height: 400px;" class="d-flex flex-column justify-content-center align-items-center text-white text-center">
-            <h1 class="display-4 fw-bold">{{ $heroe->titulo }}</h1>
-            @if($heroe->subtitulo)
-                <p class="lead">{{ $heroe->subtitulo }}</p>
-            @endif
+        <div class="bg-light overflow-hidden position-relative" style="min-height: 60vh; display: flex; align-items: center;">
+            <div class="position-absolute w-100 h-100" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('{{ $heroe->imagen ? asset($heroe->imagen) : '' }}'); background-size: cover; background-position: center;"></div>
+            <div class="container position-relative py-5">
+                <div class="row justify-content-center text-center text-white">
+                    <div class="col-lg-8">
+                        <h1 class="display-3 fw-bold mb-4">{{ $heroe->titulo }}</h1>
+                        @if($heroe->subtitulo)
+                            <p class="lead fs-4">{{ $heroe->subtitulo }}</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     @else
-        <div id="carouselExampleCaptions" class="carousel slide">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('assets/img/noticiaoriginal.jpg') }}" class="d-block w-100" style="height: 300px;" alt="Imagen principal">
-                </div>
+        <div class="bg-primary text-white py-4">
+            <div class="container text-center py-4">
+                <h1 class="display-5 fw-bold mb-2">Últimas Noticias</h1>
             </div>
         </div>
     @endif
 @endsection
 
 @section('main')
-
-    <section class="hero d-flex flex-column justify-content-center align-items-center h-75">
-        <!-- Sección: Lista de noticias -->
-        <section class="container my-5">
-            <h2 class="mb-4 fw-bold">Últimas Noticias</h2>
+    <!-- Sección: Lista de noticias -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="display-5 fw-bold mb-3">Últimas Noticias</h2>
+                </div>
+            </div>
 
             <div class="row g-4">
                 @foreach($noticias as $noticia)
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card h-100">
+                        <div class="card h-100 shadow-sm border-0">
                             @if($noticia->imagen)
-                                <img src="{{ asset($noticia->imagen) }}" class="card-img-top" alt="{{ $noticia->titulo }}" style="height:200px; object-fit:cover;">
+                                <img src="{{ asset($noticia->imagen) }}" class="card-img-top" alt="{{ $noticia->titulo }}" style="height:220px; object-fit:cover;">
                             @else
-                                <img src="{{ asset('assets/img/noticiaoriginal.jpg') }}" class="card-img-top" alt="Imagen por defecto" style="height:200px; object-fit:cover;">
+                                <img src="{{ asset('assets/img/noticiaoriginal.jpg') }}" class="card-img-top" alt="Imagen por defecto" style="height:220px; object-fit:cover;">
                             @endif
                             <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ $noticia->titulo }}</h5>
-                                <p class="card-text flex-grow-1">{{ Str::limit($noticia->descripcion_corta, 100) }}</p>
-                                <!-- Botón que abre el modal -->
+                                <h5 class="card-title fw-bold mb-3">{{ $noticia->titulo }}</h5>
+                                <p class="card-text text-muted flex-grow-1 mb-3">{{ Str::limit($noticia->descripcion_corta, 100) }}</p>
                                 <a href="{{ route('noticias.ver', $noticia->idNoticia) }}" class="btn btn-primary mt-auto">Ver más</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-        </section>
+        </div>
     </section>
 
-    <main class="container my-5">
+    @if(isset($secciones) && $secciones->count() > 0)
+        @foreach($secciones as $seccion)
+            <section class="py-5 {{ $loop->even ? 'bg-light' : 'bg-white' }}">
+                <div class="container">
+                    <div class="row align-items-center g-4">
+                        @if($seccion->imagen)
+                            <div class="col-md-5 {{ $loop->even ? 'order-md-2' : '' }}">
+                                <img src="{{ asset($seccion->imagen) }}" alt="{{ $seccion->titulo }}" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-7 {{ $loop->even ? 'order-md-1' : '' }}">
+                                <h2 class="fw-bold mb-3">{{ $seccion->titulo }}</h2>
+                                @if($seccion->parrafo)
+                                    <p class="lead">{{ $seccion->parrafo }}</p>
+                                @endif
+                            </div>
+                        @else
+                            <div class="col-12 text-center">
+                                <h2 class="fw-bold mb-3">{{ $seccion->titulo }}</h2>
+                                @if($seccion->parrafo)
+                                    <p class="lead">{{ $seccion->parrafo }}</p>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </section>
+        @endforeach
+    @endif
+
+    <main class="container my-5 py-4">
         
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
             <a class="navbar-brand" href="#">Menu de Articulos</a>
