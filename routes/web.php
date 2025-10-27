@@ -41,6 +41,12 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/actualizar-usuario/{idUsuario}', [UsuariosController::class, 'updateUsuario'])
         ->name('actualizar-usuario');
+
+    // Rutas para noticias
+    Route::get('/eliminar-noticia/{id}', [DashboardController::class, 'EliminarNoticia'])->name('eliminarNoticia');
+
+    // Rutas para categorías
+    Route::get('/eliminar-categoria/{id}', [DashboardController::class, 'EliminarCategoria'])->name('eliminarCategoria');
 });
 
 

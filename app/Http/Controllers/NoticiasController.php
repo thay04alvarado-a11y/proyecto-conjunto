@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\NoticiaModel;
+use App\Models\Noticia;
 
 class NoticiasController extends Controller
 {
@@ -15,13 +15,13 @@ class NoticiasController extends Controller
 
     public function lista()
     {
-        $noticias = NoticiaModel::all(); // Trae todas las noticias
+        $noticias = Noticia::with('categoria')->whereNotNull('imagen')->orderBy('created_at', 'desc')->get();
         return view('noticias', compact('noticias'));
     }
 
      public function ver($id)
     {
-        $noticia = NoticiaModel::find($id);
+        $noticia = Noticia::with('categoria')->findOrFail($id);
         return view('detalle_noticia', compact('noticia'));
     }
 }

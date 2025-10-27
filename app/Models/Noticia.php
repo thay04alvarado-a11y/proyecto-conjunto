@@ -9,8 +9,7 @@ class Noticia extends Model
 {
     use HasFactory;
     
-
-    protected $table = 'noticias'; // solo si quieres especificarlo explícitamente
+    protected $table = 'noticias';
     protected $primaryKey = 'idNoticia';
 
     protected $fillable = [
@@ -20,7 +19,12 @@ class Noticia extends Model
         'imagen',
         'autor',
         'fecha',
-        'imagen',
         'id_categoria',
     ];
+
+    // Relación con Categoría
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'id_categoria', 'idCategoria');
+    }
 }

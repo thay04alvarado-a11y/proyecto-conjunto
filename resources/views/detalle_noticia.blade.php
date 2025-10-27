@@ -18,12 +18,25 @@
         <h1 class="display-6">{{ $noticia->titulo }}</h1>
 
         <div class="mb-3 text-muted small">
-          {{ \Carbon\Carbon::parse($noticia->fecha)->locale('es')->isoFormat('D [de] MMMM, YYYY') }}
+          <strong>Autor:</strong> {{ $noticia->autor ?? 'Anónimo' }} | 
+          <strong>Fecha:</strong> 
+          @if($noticia->fecha)
+            {{ \Carbon\Carbon::parse($noticia->fecha)->locale('es')->isoFormat('D [de] MMMM, YYYY') }}
+          @else
+            {{ date('d/m/Y', strtotime($noticia->created_at)) }}
+          @endif
+          @if($noticia->categoria)
+            | <span class="badge bg-info">{{ $noticia->categoria->nombre }}</span>
+          @endif
         </div>
 
         @if($noticia->imagen)
           <figure class="mb-4">
-            <img src="{{ asset('storage/' . $noticia->imagen) }}" alt="Imagen de {{ $noticia->titulo }}" class="hero-image shadow-sm">
+            <img src="{{ asset($noticia->imagen) }}" alt="Imagen de {{ $noticia->titulo }}" class="img-fluid shadow-sm rounded">
+          </figure>
+        @else
+          <figure class="mb-4">
+            <img src="{{ asset('assets/img/noticiaoriginal.jpg') }}" alt="Imagen por defecto" class="img-fluid shadow-sm rounded">
           </figure>
         @endif
 

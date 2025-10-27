@@ -39,12 +39,16 @@
                 @foreach($noticias as $noticia)
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card h-100">
-                            <img src="{{ asset('assets/img/' . $noticia->imagen) }}" class="card-img-top" alt="{{ $noticia->titulo }}" style="height:200px; object-fit:cover;">
+                            @if($noticia->imagen)
+                                <img src="{{ asset($noticia->imagen) }}" class="card-img-top" alt="{{ $noticia->titulo }}" style="height:200px; object-fit:cover;">
+                            @else
+                                <img src="{{ asset('assets/img/noticiaoriginal.jpg') }}" class="card-img-top" alt="Imagen por defecto" style="height:200px; object-fit:cover;">
+                            @endif
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $noticia->titulo }}</h5>
-                                <p class="card-text flex-grow-1">{{ $noticia->descripcion_corta }}</p>
+                                <p class="card-text flex-grow-1">{{ Str::limit($noticia->descripcion_corta, 100) }}</p>
                                 <!-- Botón que abre el modal -->
-                                <a href="{{ route('noticias.ver', $noticia->idNoticia) }}">Ver más</a>
+                                <a href="{{ route('noticias.ver', $noticia->idNoticia) }}" class="btn btn-primary mt-auto">Ver más</a>
                             </div>
                         </div>
                     </div>

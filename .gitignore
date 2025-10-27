@@ -22,3 +22,10 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Imágenes de noticias subidas por usuarios
+/public/assets/img/noticias/*.jpg
+/public/assets/img/noticias/*.png
+/public/assets/img/noticias/*.gif
+/public/assets/img/noticias/*.webp
+/public/assets/img/noticias/*.svg

@@ -1,12 +1,12 @@
 @extends('admin.layout.app')
 
 @section('title')
-<h3 class="mb-0">Noticias</h3>
+<h3 class="mb-0">Categorías</h3>
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-<li class="breadcrumb-item active" aria-current="page">Noticias</li>
+<li class="breadcrumb-item active" aria-current="page">Categorías</li>
 @endsection
 
 @section('content')
@@ -68,12 +68,28 @@
     box-shadow: 0 0 12px rgba(255, 107, 129, 0.5);
   }
 
-  .img-noticia {
-    max-width: 150px;
-    max-height: 100px;
-    object-fit: cover;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  .badge-activo {
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fff;
+    display: inline-block;
+    min-width: 80px;
+    background: linear-gradient(90deg, #00b894, #00cec9);
+    box-shadow: 0 0 10px rgba(0, 184, 148, 0.5);
+  }
+
+  .badge-inactivo {
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fff;
+    display: inline-block;
+    min-width: 80px;
+    background: linear-gradient(90deg, #636e72, #2d3436);
+    box-shadow: 0 0 10px rgba(99, 110, 114, 0.3);
   }
 </style>
 
@@ -98,21 +114,21 @@
 
           <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-              <h4 class="card-title"><strong>Administración de Noticias</strong></h4>
+              <h4 class="card-title"><strong>Administración de Categorías</strong></h4>
               <p class="card-title-desc mb-0">
-                Gestiona las noticias del sitio web, crea, edita y elimina contenido de forma rápida y eficiente.
+                Gestiona las categorías para organizar tus noticias. Crea, edita y elimina categorías de forma eficiente.
               </p>
             </div>
-            <a href="{{ route('dashboard', ['seccion' => 'noticias', 'opcion' => 'form']) }}" 
+            <a href="{{ route('dashboard', ['seccion' => 'categorias', 'opcion' => 'form']) }}" 
                class="btn btn-gradient-primary">
-              <i class="bi bi-plus-circle me-1"></i> Crear Noticia
+              <i class="bi bi-plus-circle me-1"></i> Crear Categoría
             </a>
           </div>
 
-          @if($noticias->isEmpty())
+          @if($categorias->isEmpty())
             <div class="alert alert-warning">
               <i class="bi bi-exclamation-triangle me-2"></i>
-              No hay noticias registradas.
+              No hay categorías registradas.
             </div>
           @else
             <div class="table-responsive">
@@ -120,46 +136,32 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Imagen</th>
-                    <th>Título</th>
-                    <th>Descripción Corta</th>
-                    <th>Autor</th>
-                    <th>Fecha</th>
-                    <th>Categoría</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($noticias as $n)
+                  @foreach($categorias as $cat)
                   <tr>
-                    <td><strong>{{ $n->idNoticia }}</strong></td>
+                    <td><strong>{{ $cat->idCategoria }}</strong></td>
+                    <td>{{ $cat->nombre }}</td>
+                    <td>{{ Str::limit($cat->descripcion, 80) }}</td>
                     <td>
-                      @if($n->imagen)
-                        <img src="{{ asset($n->imagen) }}" alt="{{ $n->titulo }}" class="img-noticia">
-                      @else
-                        <span class="text-muted">Sin imagen</span>
-                      @endif
-                    </td>
-                    <td>{{ Str::limit($n->titulo, 50) }}</td>
-                    <td>{{ Str::limit($n->descripcion_corta ?? 'N/A', 60) }}</td>
-                    <td>{{ $n->autor ?? 'N/A' }}</td>
-                    <td>{{ $n->fecha ? date('d/m/Y', strtotime($n->fecha)) : 'N/A' }}</td>
-                    <td>
-                      @if($n->categoria)
-                        <span class="badge bg-info">{{ $n->categoria->nombre }}</span>
-                      @else
-                        <span class="text-muted">Sin categoría</span>
-                      @endif
+                      <span class="badge {{ $cat->activo ? 'badge-activo' : 'badge-inactivo' }}">
+                        {{ $cat->activo ? 'Activo' : 'Inactivo' }}
+                      </span>
                     </td>
                     <td class="text-nowrap">
-                      <a href="{{ route('dashboard', ['seccion' => 'noticias', 'opcion' => 'form', 'id' => Crypt::encryptString($n->idNoticia)]) }}"
+                      <a href="{{ route('dashboard', ['seccion' => 'categorias', 'opcion' => 'form', 'id' => Crypt::encryptString($cat->idCategoria)]) }}"
                         class="btn btn-sm btn-gradient-primary me-1"
-                        title="Editar noticia">
+                        title="Editar categoría">
                         <i class="bi bi-pencil-square"></i>
                       </a>
-                      <a href="{{ route('eliminarNoticia', ['id' => Crypt::encryptString($n->idNoticia)]) }}"
-                        class="btn btn-sm btn-gradient-danger eliminar-noticia"
-                        title="Eliminar noticia">
+                      <a href="{{ route('eliminarCategoria', ['id' => Crypt::encryptString($cat->idCategoria)]) }}"
+                        class="btn btn-sm btn-gradient-danger eliminar-categoria"
+                        title="Eliminar categoría">
                         <i class="bi bi-trash"></i>
                       </a>
                     </td>
@@ -177,13 +179,13 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const deleteButtons = document.querySelectorAll('.eliminar-noticia');
+    const deleteButtons = document.querySelectorAll('.eliminar-categoria');
 
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function(e) {
             e.preventDefault();
 
-            if (confirm('¿Estás seguro de que quieres eliminar esta noticia? Esta acción no se puede deshacer.')) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta categoría? Esta acción no se puede deshacer.')) {
                 window.location.href = this.href;
             }
         });
@@ -191,3 +193,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endsection
+
