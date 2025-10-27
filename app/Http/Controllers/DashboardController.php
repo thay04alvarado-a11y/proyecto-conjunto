@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Noticia;
 use App\Models\Categoria;
+use App\Models\Heroe;
+use App\Models\Seccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
@@ -31,6 +33,26 @@ class DashboardController extends Controller
                         break;
                     default:
                         return $this->categorias();
+                        break;
+                }
+                break;
+            case 'heroes':
+                switch ($opcion) {
+                    case 'form':
+                        return $this->heroesForm($id);
+                        break;
+                    default:
+                        return $this->heroes();
+                        break;
+                }
+                break;
+            case 'secciones':
+                switch ($opcion) {
+                    case 'form':
+                        return $this->seccionesForm($id);
+                        break;
+                    default:
+                        return $this->secciones();
                         break;
                 }
                 break;
@@ -235,6 +257,178 @@ class DashboardController extends Controller
         } catch (\Throwable $th) {
             Log::error('Error al eliminar la categoría: ' . $th->getMessage());
             return redirect()->route('dashboard', ['seccion' => 'categorias'])->with('error', 'Error al eliminar la categoría');
+        }
+    }
+
+    //heroes
+    public function heroes()
+    {
+        try {
+            $heroes = Heroe::orderBy('created_at', 'desc')->get();
+            return view('admin.heroes.heroes', compact('heroes'));
+        } catch (\Throwable $th) {
+            Log::error('Error al cargar heroes: ' . $th->getMessage());
+            return view('admin.heroes.heroes', ['heroes' => collect([])]);
+        }
+    }
+
+    public function heroesForm($id = null)
+    {
+        $request = request();
+        try {
+            if ($request->isMethod('post')) {
+                $validated = $request->validate([
+                    'pagina' => 'required|string|max:100',
+                    'titulo' => 'required|string|max:150',
+                    'subtitulo' => 'nullable|string|max:255',
+                    'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                ]);
+
+                // Manejar la imagen
+                if ($request->hasFile('imagen')) {
+                    $archivo = $request->file('imagen');
+                    $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+                    $destino = public_path('assets/img/heroes');
+                    
+                    if (!file_exists($destino)) {
+                        mkdir($destino, 0755, true);
+                    }
+                    
+                    $archivo->move($destino, $nombreArchivo);
+                    $validated['imagen'] = 'assets/img/heroes/' . $nombreArchivo;
+                } else {
+                    unset($validated['imagen']);
+                }
+
+                if ($id) {
+                    $idnew = Crypt::decryptString($id);
+                    $heroe = Heroe::findOrFail($idnew);
+                    $heroe->update($validated);
+                    $mensaje = 'Heroe actualizado correctamente';
+                } else {
+                    Heroe::create($validated);
+                    $mensaje = 'Heroe creado correctamente';
+                }
+                
+                return redirect()->route('dashboard', ['seccion' => 'heroes'])->with('success', $mensaje);
+            }
+
+            if ($id) {
+                $idnew = Crypt::decryptString($id);
+                $heroe = Heroe::findOrFail($idnew);
+                return view('admin.heroes.heroes-form', compact('heroe'));
+            }
+
+            return view('admin.heroes.heroes-form');
+            
+        } catch (\Throwable $th) {
+            Log::error('Error en heroes form: ' . $th->getMessage());
+            return redirect()->route('dashboard', ['seccion' => 'heroes'])->with('error', 'Error al procesar el formulario');
+        }
+    }
+
+    public function EliminarHeroe($id)
+    {
+        try {
+            $idnew = Crypt::decryptString($id);
+            $heroe = Heroe::findOrFail($idnew);
+            
+            if ($heroe->imagen && file_exists(public_path($heroe->imagen))) {
+                unlink(public_path($heroe->imagen));
+            }
+            
+            $heroe->delete();
+            return redirect()->route('dashboard', ['seccion' => 'heroes'])->with('success', 'Heroe eliminado correctamente');
+        } catch (\Throwable $th) {
+            Log::error('Error al eliminar heroe: ' . $th->getMessage());
+            return redirect()->route('dashboard', ['seccion' => 'heroes'])->with('error', 'Error al eliminar el heroe');
+        }
+    }
+
+    //secciones
+    public function secciones()
+    {
+        try {
+            $secciones = Seccion::orderBy('created_at', 'desc')->get();
+            return view('admin.secciones.secciones', compact('secciones'));
+        } catch (\Throwable $th) {
+            Log::error('Error al cargar secciones: ' . $th->getMessage());
+            return view('admin.secciones.secciones', ['secciones' => collect([])]);
+        }
+    }
+
+    public function seccionesForm($id = null)
+    {
+        $request = request();
+        try {
+            if ($request->isMethod('post')) {
+                $validated = $request->validate([
+                    'identificador' => 'required|string|max:100',
+                    'titulo' => 'required|string|max:150',
+                    'parrafo' => 'nullable|string',
+                    'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                ]);
+
+                $validated['activo'] = $request->has('activo') ? 1 : 0;
+
+                // Manejar la imagen
+                if ($request->hasFile('imagen')) {
+                    $archivo = $request->file('imagen');
+                    $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+                    $destino = public_path('assets/img/secciones');
+                    
+                    if (!file_exists($destino)) {
+                        mkdir($destino, 0755, true);
+                    }
+                    
+                    $archivo->move($destino, $nombreArchivo);
+                    $validated['imagen'] = 'assets/img/secciones/' . $nombreArchivo;
+                } else {
+                    unset($validated['imagen']);
+                }
+
+                if ($id) {
+                    $idnew = Crypt::decryptString($id);
+                    $seccion = Seccion::findOrFail($idnew);
+                    $seccion->update($validated);
+                    $mensaje = 'Sección actualizada correctamente';
+                } else {
+                    Seccion::create($validated);
+                    $mensaje = 'Sección creada correctamente';
+                }
+                
+                return redirect()->route('dashboard', ['seccion' => 'secciones'])->with('success', $mensaje);
+            }
+
+            if ($id) {
+                $idnew = Crypt::decryptString($id);
+                $seccion = Seccion::findOrFail($idnew);
+                return view('admin.secciones.secciones-form', compact('seccion'));
+            }
+
+            return view('admin.secciones.secciones-form');
+            
+        } catch (\Throwable $th) {
+            Log::error('Error en secciones form: ' . $th->getMessage());
+            return redirect()->route('dashboard', ['seccion' => 'secciones'])->with('error', 'Error al procesar el formulario');
+        }
+    }
+
+    public function EliminarSeccion($id)
+    {
+        try {
+            $idnew = Crypt::decryptString($id);
+            $seccion = Seccion::findOrFail($idnew);
+            
+            if ($seccion->imagen && file_exists(public_path($seccion->imagen))) {
+                unlink(public_path($seccion->imagen));
+            }
+            
+            $seccion->delete();
+            return redirect()->route('dashboard', ['seccion' => 'secciones'])->with('success', 'Sección eliminada correctamente');
+        } catch (\Throwable $th) {
+            Log::error('Error al eliminar sección: ' . $th->getMessage());
+            return redirect()->route('dashboard', ['seccion' => 'secciones'])->with('error', 'Error al eliminar la sección');
         }
     }
 

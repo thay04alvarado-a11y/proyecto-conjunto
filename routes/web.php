@@ -47,6 +47,12 @@ Route::middleware('auth')->group(function () {
 
     // Rutas para categorías
     Route::get('/eliminar-categoria/{id}', [DashboardController::class, 'EliminarCategoria'])->name('eliminarCategoria');
+
+    // Rutas para heroes
+    Route::get('/eliminar-heroe/{id}', [DashboardController::class, 'EliminarHeroe'])->name('eliminarHeroe');
+
+    // Rutas para secciones
+    Route::get('/eliminar-seccion/{id}', [DashboardController::class, 'EliminarSeccion'])->name('eliminarSeccion');
 });
 
 

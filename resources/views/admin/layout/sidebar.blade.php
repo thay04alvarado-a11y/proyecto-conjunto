@@ -56,14 +56,84 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('dashboard', ['seccion' => 'noticias', 'opcion' => 'form']) }}" class="nav-link">
-                                <i class="nav-icon bi bi-newspaper"></i>
+                                <i class="nav-icon bi bi-plus-circle"></i>
                                 <p>Crear Noticia</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-tags"></i>
+                        <p>Categorías</p>
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </a>
+                    
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard', ['seccion' => 'categorias']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-list"></i>
+                                <p>Lista Categorías</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard', ['seccion' => 'categorias', 'opcion' => 'form']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-plus-circle"></i>
+                                <p>Crear Categoría</p>
                             </a>
                         </li>
                     </ul>
                 </li>
                 
                 <li class="nav-header">SITIO WEB</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-image"></i>
+                        <p>Heroes</p>
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </a>
+                    
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard', ['seccion' => 'heroes']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-list"></i>
+                                <p>Lista Heroes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard', ['seccion' => 'heroes', 'opcion' => 'form']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-plus-circle"></i>
+                                <p>Crear Hero</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon bi bi-columns"></i>
+                        <p>Secciones</p>
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </a>
+                    
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard', ['seccion' => 'secciones']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-list"></i>
+                                <p>Lista Secciones</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard', ['seccion' => 'secciones', 'opcion' => 'form']) }}" class="nav-link">
+                                <i class="nav-icon bi bi-plus-circle"></i>
+                                <p>Crear Sección</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="nav-header">SITIO WEB (Configuración antigua)</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon bi bi-palette"></i>
