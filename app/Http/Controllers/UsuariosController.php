@@ -33,7 +33,7 @@ class UsuariosController extends Controller
                 ], 401);
             }
 
-            // 🔐 Verificar contraseña encriptada
+            // 🔐 Verificar contraseña encriptada con Crypt
             if ($contra != Crypt::decryptString($usuario->contra)) {
                 return response()->json([
                     'ok' => false,
@@ -49,11 +49,15 @@ class UsuariosController extends Controller
                 ], 401);
             }
 
+            // 🔑 Crear sesión de autenticación
+            Auth::login($usuario);
+
             // ✅ Login exitoso
             return response()->json([
                 'ok' => true,
             ], 200);
         } catch (\Exception $e) {
+            Log::error('Error al iniciar sesión: ' . $e->getMessage());
             return response()->json([
                 'ok' => false,
                 'mensaje' => 'Error interno en el servidor.',
@@ -75,17 +79,16 @@ class UsuariosController extends Controller
             Auth::logout();
             return redirect()->route('login');
         } catch (\Throwable $th) {
-            log::error('Error al cerrar sesión: ' . $th->getMessage());
+            Log::error('Error al cerrar sesión: ' . $th->getMessage());
             return redirect()->route('login')->with('error', 'Error al cerrar sesión');
         }
-        return "logout";
     }
 
     // 📋 Listado de usuarios
     public function usuarios()
     {
         $usuarios = Usuario::all();
-        return view('admin.usuarios.usuarios', compact('modelUsuarios'));
+        return view('admin.usuarios.usuarios', compact('usuarios'));
     }
 
     // 🧾 Formulario de usuario
@@ -108,7 +111,7 @@ class UsuariosController extends Controller
             $usuario = Usuario::create([
                 'nombre' => $validated['nombre'],
                 'correo' => $validated['correo'],
-                'contra' => bcrypt($validated['contra']),
+                'contra' => Crypt::encryptString($validated['contra']),
                 'activo' => $validated['activo'],
             ]);
 
@@ -158,7 +161,7 @@ class UsuariosController extends Controller
 
         // Solo agrega la contraseña si llega
         if (!empty($request->input('contra'))) {
-            $datos['contra'] = bcrypt($request->input('contra'));
+            $datos['contra'] = Crypt::encryptString($request->input('contra'));
         }
 
         $usuario->update($datos);

@@ -32,7 +32,7 @@ return new class extends Migration
             $usuario->save();
             DB::commit();
         } catch (\Throwable $th) {
-            log::error('Error al crear el usuario: ' . $th->getMessage());
+            Log::error('Error al crear el usuario: ' . $th->getMessage());
         }
     }
 
