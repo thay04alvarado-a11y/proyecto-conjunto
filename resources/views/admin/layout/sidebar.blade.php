@@ -117,6 +117,13 @@
                 </li>
                 
                 <li class="nav-header">CONFIGURACIONES</li>
+                
+                <li class="nav-item">
+                    <a href="{{ route('dashboard', ['seccion' => 'configuracion']) }}" class="nav-link">
+                        <i class="nav-icon bi bi-gear"></i>
+                        <p>Configuración del Sitio</p>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">

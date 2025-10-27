@@ -14,9 +14,14 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">ETAI</a>
+      <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}">
+        @if(isset($configuracionSitio) && $configuracionSitio->logo_sitio)
+          <img src="{{ asset($configuracionSitio->logo_sitio) }}" alt="Logo" height="40" class="me-2">
+        @endif
+        {{ isset($configuracionSitio) && $configuracionSitio->nombre_sitio ? $configuracionSitio->nombre_sitio : 'ETAI' }}
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>

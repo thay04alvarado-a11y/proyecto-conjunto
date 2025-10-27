@@ -6,6 +6,7 @@ use App\Models\Noticia;
 use App\Models\Categoria;
 use App\Models\Heroe;
 use App\Models\Seccion;
+use App\Models\ConfiguracionSitio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
@@ -54,7 +55,17 @@ class DashboardController extends Controller
                     default:
                         // $opcion es el nombre real de la página (home, somos, noticias)
                         return $this->configurarPagina($opcion);
+                            break;
+                }
+                break;
+            case 'configuracion':
+                switch ($opcion) {
+                    case 'form':
+                        return $this->configuracionForm();
                         break;
+                    default:
+                        return $this->configuracion();
+                            break;
                 }
                 break;
             case 'website':
@@ -599,6 +610,68 @@ class DashboardController extends Controller
         } catch (\Throwable $th) {
             Log::error('Error al eliminar sección: ' . $th->getMessage());
             return redirect()->route('dashboard', ['seccion' => 'secciones'])->with('error', 'Error al eliminar la sección');
+        }
+    }
+
+    //configuracion sitio
+    public function configuracion()
+    {
+        try {
+            $configuracion = ConfiguracionSitio::where('activo', 1)->first();
+            return view('admin.configuracion-sitio.configuracion', compact('configuracion'));
+        } catch (\Throwable $th) {
+            Log::error('Error al cargar configuración: ' . $th->getMessage());
+            return view('admin.configuracion-sitio.configuracion', ['configuracion' => null]);
+        }
+    }
+
+    public function configuracionForm()
+    {
+        $request = request();
+        try {
+            if ($request->isMethod('post')) {
+                $validated = $request->validate([
+                    'nombre_sitio' => 'required|string|max:150',
+                    'logo_sitio' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+                ]);
+
+                // Manejar el logo
+                if ($request->hasFile('logo_sitio')) {
+                    $archivo = $request->file('logo_sitio');
+                    $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+                    $destino = public_path('assets/img');
+                    
+                    if (!file_exists($destino)) {
+                        mkdir($destino, 0755, true);
+                    }
+                    
+                    $archivo->move($destino, $nombreArchivo);
+                    $validated['logo_sitio'] = 'assets/img/' . $nombreArchivo;
+                } else {
+                    unset($validated['logo_sitio']);
+                }
+
+                $validated['activo'] = 1;
+
+                // Actualizar o crear configuración
+                $config = ConfiguracionSitio::where('activo', 1)->first();
+                if ($config) {
+                    $config->update($validated);
+                    $mensaje = 'Configuración actualizada correctamente';
+                } else {
+                    ConfiguracionSitio::create($validated);
+                    $mensaje = 'Configuración creada correctamente';
+                }
+                
+                return redirect()->route('dashboard', ['seccion' => 'configuracion'])->with('success', $mensaje);
+            }
+
+            $configuracion = ConfiguracionSitio::where('activo', 1)->first();
+            return view('admin.configuracion-sitio.configuracion-form', compact('configuracion'));
+            
+        } catch (\Throwable $th) {
+            Log::error('Error en configuración form: ' . $th->getMessage());
+            return redirect()->route('dashboard', ['seccion' => 'configuracion'])->with('error', 'Error al procesar el formulario');
         }
     }
 
