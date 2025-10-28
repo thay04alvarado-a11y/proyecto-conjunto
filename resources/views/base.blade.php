@@ -25,6 +25,7 @@
           <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url('/noticias') }}">Noticias</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ url('/somos') }}">Quiénes Somos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
         </ul>
       </div>
     </div>
