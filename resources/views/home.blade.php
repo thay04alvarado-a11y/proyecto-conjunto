@@ -25,22 +25,6 @@
             </div>
         </div>
     @endif
-<!-- <section class="hero d-flex flex-column justify-content-center align-items-center homeHero">
-      <h1 class="display-4 fw-bold">Bienvenidos a la ETAI</h1>
-      <p class="lead">Educación, innovación y sostenibilidad en el corazón verde del conocimiento</p>
-    </section> -->
-    <div id="carouselExampleCaptions" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{{ asset('assets/'.$configuracion->home_hero) }}" class="d-block img-fluid" style="height: 500px; width: 100%;" alt="Imagen Hero Home">
-          <div class="carousel-caption d-none d-md-block">
-            <h1 class="display-4 fw-bold">Bienvenidos a la ETAI</h1>
-            <p class="lead fw-bold">Educación, innovación y sostenibilidad en el corazón verde del conocimiento.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
 
 

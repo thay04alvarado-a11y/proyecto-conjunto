@@ -87,11 +87,10 @@ class DashboardController extends Controller
     public function dashboard()
     {
         try {
-            //code...
+            return view('admin.dashboard');
         } catch (\Throwable $th) {
             log::error('Error al cargar el dashboard: ' . $th->getMessage());
         }
-        return view('admin.dashboard');
     }
     
     //noticias
@@ -99,7 +98,7 @@ class DashboardController extends Controller
     {
         try {
             $noticias = Noticia::with('categorias')->orderBy('created_at', 'desc')->get();
-            $categorias = \App\Models\Categoria::where('activo', 1)->get();
+            $categorias = Categoria::where('activo', 1)->get();
             return view('admin.noticas.noticias', compact('noticias', 'categorias'));
         } catch (\Throwable $th) {
             Log::error('Error al cargar el noticias: ' . $th->getMessage());
@@ -110,7 +109,7 @@ class DashboardController extends Controller
     {
         $request = request();
         try {
-            $categorias = \App\Models\Categoria::where('activo', 1)->get();
+            $categorias = Categoria::where('activo', 1)->get();
             
             // Si viene por POST, procesar el formulario
                 if ($request->isMethod('post')) {
