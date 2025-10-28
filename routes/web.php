@@ -9,14 +9,16 @@ use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\HomeSomosController;
 
 /* Rutas para la pagina principal */
-Route::get('/',[HomeSomosController::class, 'home']);
+Route::get('/',function(){
+    return redirect()->route('home');
+});
 
 /* Rutas para las noticias */
 Route::get('/noticias',[NoticiasController::class, 'lista']);
 Route::get('/noticiasDetalle/{id}', [NoticiasController::class, 'ver'])->name('noticias.ver');
 
 /* Rutas para el home y somos */
-Route::get('/home', [HomeSomosController::class, 'home']);
+Route::get('/home', [HomeSomosController::class, 'home'])->name('home');
 Route::get('/somos', [HomeSomosController::class, 'somos']);
 
 Route::get('/login', [UsuariosController::class, 'Login']) ->name('login');

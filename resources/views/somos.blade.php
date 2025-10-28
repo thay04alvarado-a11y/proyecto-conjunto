@@ -67,15 +67,11 @@
             </div>
         </section>
     @endif
-    <!-- <section class="hero d-flex flex-column justify-content-center align-items-center somosHero">
-      <h1 class="display-4 fw-bold">Quiénes Somos</h1>
-      <p class="lead">Más de 30 años impulsando la educación técnica y el desarrollo sostenible.</p>
-    </section> -->
 
     <div id="carouselExampleCaptions" class="carousel slide">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="{{ asset('assets/'.$configuracion->somos_hero) }}" class="d-block img-fluid" style="height: 500px; width: 100%;" alt="Imagen Hero Somos">
+          <img src="#" class="d-block img-fluid" style="height: 500px; width: 100%;" alt="Imagen Hero Somos">
           <div class="carousel-caption d-none d-md-block">
             <h1 class="display-4 fw-bold">Quiénes Somos</h1>
             <p class="lead fw-bold">Más de 30 años impulsando la educación técnica y el desarrollo sostenible.</p>

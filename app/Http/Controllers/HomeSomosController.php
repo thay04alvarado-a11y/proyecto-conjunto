@@ -13,16 +13,14 @@ class HomeSomosController extends Controller
     {
         $heroe = Heroe::where('pagina', 'home')->first();
         $secciones = Seccion::where('identificador', 'LIKE', 'home_%')->where('activo', 1)->get();
-        $configuracion = ConfiguracionSitio::findorfail(1);
-        return view("home", compact('heroe', 'secciones',"configuracion"));
+        return view("home", compact('heroe', 'secciones'));
     }
 
     public function somos()
     {
         $heroe = Heroe::where('pagina', 'somos')->first();
         $secciones = Seccion::where('identificador', 'LIKE', 'somos_%')->where('activo', 1)->get();
-        $configuracion = ConfiguracionSitio::findorfail(1);
-        return view("somos", compact('heroe', 'secciones',"configuracion"));
+        return view("somos", compact('heroe', 'secciones'));
     }
     
 }
